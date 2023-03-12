@@ -1,11 +1,35 @@
 {
   "name": "cordova-plugin-dynamic-color",
   "version": "0.0.1",
+  "description": "Get the Android 12+ Dynamic color and palette",
+  "author": "Oleguer Llopart",
+  "license": "MIT",
   "cordova": {
     "id": "cordova-plugin-dynamic-color",
     "platforms": [
       "android"
     ]
   },
-  "description": "Get the Android 12+ Dynamic color and palette"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ollm/cordova-plugin-dynamic-color"
+  },
+  "bugs": {
+    "url": "https://github.com/ollm/cordova-plugin-dynamic-color/issues"
+  },
+  "homepage": "https://github.com/ollm/cordova-plugin-dynamic-color#readme",
+  "keywords": [
+    "cordova",
+    "cordova-android",
+    "cordova-plugin",
+    "android-dark-theme",
+    "dynamic-color",
+    "dynamic-colors",
+    "material-you",
+    "material-3",
+    "material-design"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
 }

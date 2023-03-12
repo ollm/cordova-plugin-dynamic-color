@@ -1,11 +1,11 @@
 
 # cordova-plugin-dynamic-color
 
-> The `DynamicColor` object provides some functions to obtain current [dynamic color](https://m3.material.io/styles/color/dynamic-color/overview) palette (Android 12+) and dark/light theme status.
+> The `DynamicColor` object provides some functions to obtain current [dynamic color](https://m3.material.io/styles/color/dynamic-color/overview) colors/palette (Android 12+) and dark theme status (Android 9+).
 
 ## Installation
 
-    cordova plugin add http://github.com/ollm/cordova-plugin-dynamic-color.git
+    cordova plugin add cordova-plugin-dynamic-color
 
 Methods
 -------
@@ -271,9 +271,9 @@ DynamicColor.palette(function(palette) {
 This event is fired when any change in DayNight or DynamiColor (or both at the same time) is detected, this event only checks if there have been any changes when the app goes from the background to the foreground, if the DayNight/DynamiColor is changed while the app is in the foreground it will not be detected.
 
 ```js
-window.addEventListener('dynamicColor', function(changed) {
+document.addEventListener('dynamicColor', function(event) {
 
-	changed = {
+	event.changed = {
 		dayNight: true, // true if the DayNight theme have changed (dark theme turned on or off)
 		dynamicColor: true, // true if the DynamiColor colors/palette have changed
 	}
