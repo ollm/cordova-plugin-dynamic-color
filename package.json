@@ -1,0 +1,11 @@
+{
+  "name": "cordova-plugin-dynamic-color",
+  "version": "0.0.1",
+  "cordova": {
+    "id": "cordova-plugin-dynamic-color",
+    "platforms": [
+      "android"
+    ]
+  },
+  "description": "Get the Android 12+ Dynamic color and palette"
+}

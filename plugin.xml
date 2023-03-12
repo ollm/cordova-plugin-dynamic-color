@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    id="cordova-plugin-dynamic-color"
+    version="0.0.1">
+    <name>Cordova Plugin Dynamic Color</name>
+    <description></description>
+    <license>MIT</license>
+    <keywords></keywords>
+    <repo>https://github.com/ollm/cordova-plugin-dynamic-color.git</repo>
+    <issue>https://github.com/ollm/cordova-plugin-dynamic-color/issues</issue>
+
+    <!-- android -->
+    <platform name="android">
+
+      <js-module src="www/plugin.js" name="plugin">
+        <runs/>
+        <clobbers target="DynamicColor" />
+      </js-module>
+      <config-file target="res/xml/config.xml" parent="/*">
+        <feature name="DynamicColor">
+          <param name="android-package" value="com.ollm.cordova.plugin.dynamiccolor.DynamicColor" />
+          <param name="onload" value="true" />
+        </feature>
+      </config-file>
+
+      <source-file src="src/android/DynamicColor.java" target-dir="src/dynamic/color/cordova/" />
+
+      <framework src="com.google.android.material:material:1.8.0" />
+
+    </platform>
+</plugin>
