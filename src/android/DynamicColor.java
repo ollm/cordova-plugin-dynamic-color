@@ -128,7 +128,7 @@ public class DynamicColor extends CordovaPlugin {
 					colorsLight.put("inverseOnSurface", intColorToHex(ContextCompat.getColor(context, R.color.m3_sys_color_dynamic_light_inverse_on_surface)));
 					colorsLight.put("inversePrimary", intColorToHex(ContextCompat.getColor(context, R.color.m3_sys_color_dynamic_light_inverse_primary)));
 					colorsLight.put("shadow", "#000000");
-					colorsLight.put("surfaceTint", "#000000"); //intColorToHex(ContextCompat.getColor(context, R.color.m3_assist_chip_icon_tint_color)));
+					colorsLight.put("surfaceTint", intColorToHex(ContextCompat.getColor(context, R.color.m3_sys_color_dynamic_light_primary))); //intColorToHex(ContextCompat.getColor(context, R.color.m3_assist_chip_icon_tint_color)));
 					colorsLight.put("outlineVariant", intColorToHex(ContextCompat.getColor(context, R.color.m3_sys_color_dynamic_light_outline_variant)));
 					colorsLight.put("scrim", intColorToHex(ContextCompat.getColor(context, R.color.mtrl_scrim_color)));
 
@@ -160,7 +160,7 @@ public class DynamicColor extends CordovaPlugin {
 					colorsDark.put("inverseOnSurface", intColorToHex(ContextCompat.getColor(context, R.color.m3_sys_color_dynamic_dark_inverse_on_surface)));
 					colorsDark.put("inversePrimary", intColorToHex(ContextCompat.getColor(context, R.color.m3_sys_color_dynamic_dark_inverse_primary)));
 					colorsDark.put("shadow", "#000000");
-					colorsDark.put("surfaceTint", "#000000"); //intColorToHex(ContextCompat.getColor(context, R.color.m3_assist_chip_icon_tint_color)));
+					colorsDark.put("surfaceTint", intColorToHex(ContextCompat.getColor(context, R.color.m3_sys_color_dynamic_dark_primary))); //intColorToHex(ContextCompat.getColor(context, R.color.m3_assist_chip_icon_tint_color)));
 					colorsDark.put("outlineVariant", intColorToHex(ContextCompat.getColor(context, R.color.m3_sys_color_dynamic_dark_outline_variant)));
 					colorsDark.put("scrim", intColorToHex(ContextCompat.getColor(context, R.color.mtrl_scrim_color)));
 

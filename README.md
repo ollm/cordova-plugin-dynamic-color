@@ -1,14 +1,34 @@
-
 # cordova-plugin-dynamic-color
 
 > The `DynamicColor` object provides some functions to obtain current [dynamic color](https://m3.material.io/styles/color/dynamic-color/overview) palette/colors (Android 12+) and dark theme status (Android 9+).
 
+**Table of Contents**
+
+- [Installation](#installation)
+- [Methods](#methods)
+  - [Simple example of plugin usage](#simple-example-of-plugin-usage)
+  - [DynamicColor.isDynamicColorAvailable](#dynamiccolorisdynamiccoloravailable)
+  - [DynamicColor.dayNight](#dynamiccolordaynight)
+  - [DynamicColor.colors](#dynamiccolorcolors)
+  - [DynamicColor.palette](#dynamiccolorpalette)
+  - [DynamicColor.tintColors](#dynamiccolortintcolors)
+  - [DynamicColor.tintSurfaceColors](#dynamiccolortintsurfacecolors)
+  - [DynamicColor.mixColor](#dynamiccolormixcolor)
+  - [DynamicColor.mixColorElevation](#dynamiccolormixcolorelevation)
+  - [DynamicColor.colorsToCssVars](#dynamiccolorcolorstocssvars)
+  - [DynamicColor.paletteToCssVars](#dynamiccolorpalettetocssvars)
+  - [DynamicColor.colorsToDom](#dynamiccolorcolorstodom)
+  - [DynamicColor.paletteToDom](#dynamiccolorpalettetodom)
+- [Events](#events)
+  - [dynamicColorChange](#dynamiccolorchange)
+
+
 ## Installation
 
-    cordova plugin add cordova-plugin-dynamic-color
+`cordova plugin add cordova-plugin-dynamic-color`
 
-Methods
--------
+## Methods
+
 This plugin defines global `DynamicColor` object.
 
 Although in the global scope, it is not available until after the `deviceready` event.
@@ -22,7 +42,7 @@ function onDeviceReady()
 }
 ```
 
-Simple example of plugin usage
+### Simple example of plugin usage
 
 ```js
 document.addEventListener("deviceready", onDeviceReady, false);
@@ -46,10 +66,11 @@ function getDynamicColor() {
 
 	DynamicColor.colors(function(colors) {
 
-		DynamicColor.colorsToDom(colors.dayNight);
+		DynamicColor.colorsToDom(DynamicColor.tintSurfaceColors(colors.dayNight));
 
 	});
 
+	// Optional palette colors
 	DynamicColor.palette(function(colors) {
 
 		DynamicColor.paletteToDom(colors.palette);
@@ -243,6 +264,85 @@ DynamicColor.palette(function(colors) {
 });
 ```
 
+### DynamicColor.tintColors
+
+Apply the tint according to [Material Design Guidelines](https://m3.material.io/styles/color/the-color-system/color-roles#c0cdc1ba-7e67-4d6a-b294-218f659ff648), you can also use css [`color-mix`](https://developer.chrome.com/blog/css-color-mix/) to mix the surface with tint (`color-mix(in srgb, var(--md-sys-color-on-surface), var(--md-sys-color-on-surface-tint) 5%)`), but currently it's not [supported](https://caniuse.com/?search=color-mix) for many browsers.
+
+```js
+var colors = DynamicColor.tintColors(colors.light, Array onlyKeys = false);
+
+colors = {
+	surface: '#FFFBFF',
+	surface1: '#f9f2f4',
+	surface2: '#f6edee',
+	surface3: '#f2e8e8',
+	surface4: '#f1e6e5',
+	surface5: '#efe3e1',
+	...
+}
+
+/*
+--md-sys-color-surface: #FFFBFF;
+--md-sys-color-surface1: #f9f2f4;
+--md-sys-color-surface2: #f6edee;
+--md-sys-color-surface3: #f2e8e8;
+--md-sys-color-surface4: #f1e6e5;
+--md-sys-color-surface5: #efe3e1;
+...
+*/
+
+```
+
+- __onlyKeys__ Keys to generate tint versions, by default all keys.
+
+### DynamicColor.tintSurfaceColors
+
+Same as above code, but only applies to surfaces (Including background).
+
+```js
+var colors = DynamicColor.tintSurfaceColors(colors.light);
+
+colors = {
+	surface: '#FFFBFF',
+	surface1: '#f9f2f4',
+	surface2: '#f6edee',
+	surface3: '#f2e8e8',
+	surface4: '#f1e6e5',
+	surface5: '#efe3e1',
+	...
+}
+
+/*
+--md-sys-color-surface: #FFFBFF;
+--md-sys-color-surface1: #f9f2f4;
+--md-sys-color-surface2: #f6edee;
+--md-sys-color-surface3: #f2e8e8;
+--md-sys-color-surface4: #f1e6e5;
+--md-sys-color-surface5: #efe3e1;
+...
+*/
+```
+
+### DynamicColor.mixColor
+
+Mix two colors to one acording a amount.
+
+```js
+DynamicColor.mixColor(String color1, String color2, Float amount);
+```
+
+-  __amount__ Amount, from 0.0 to 1.0
+
+### DynamicColor.mixColorElevation
+
+Mix two colors to one acording a [Material Design Guidelines Elevation](https://m3.material.io/styles/color/the-color-system/color-roles#de5b0f5e-c4a5-48ef-8670-369682e9c7b7).
+
+```js
+DynamicColor.mixColorElevation(String color1, String color2, Int elevation);
+```
+
+-  __elevation__ Elevation, from 1 to 5.
+
 ### DynamicColor.colorsToCssVars
 
 Convert the colors object to css vars.
@@ -305,7 +405,7 @@ DynamicColor.palette(function(colors) {
 
 ## Events
 
-### dynamicColor
+### dynamicColorChange
 
 This event is fired when any change in DayNight or DynamiColor (or both at the same time) is detected, this event only checks if there have been any changes when the app goes from the background to the foreground, if the DayNight/DynamiColor is changed while the app is in the foreground it will not be detected.
 
