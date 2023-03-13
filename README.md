@@ -1,6 +1,9 @@
 # cordova-plugin-dynamic-color
 
-> The `DynamicColor` object provides some functions to obtain current [dynamic color](https://m3.material.io/styles/color/dynamic-color/overview) palette/colors (Android 12+) and dark theme status (Android 9+).
+![cordova-dynamic-color](https://user-images.githubusercontent.com/18549191/224811654-e745d7a6-fe2d-4ef4-88d3-8883cd8ab537.jpg)
+<!-- ![cordova-dynamic-color-6](https://user-images.githubusercontent.com/18549191/224815105-cafa8060-b50f-4079-864c-2340229adeaa.jpg) -->
+
+> The `DynamicColor` object provides some functions to obtain current [dynamic color](https://m3.material.io/styles/color/dynamic-color/overview) palette/colors in Android 12+ and dark theme status in Android 9+.
 
 **Table of Contents**
 
