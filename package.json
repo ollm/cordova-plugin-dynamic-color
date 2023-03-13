@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-dynamic-color",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Get the Android 12+ Dynamic color and palette",
   "author": "Oleguer Llopart",
   "license": "MIT",
