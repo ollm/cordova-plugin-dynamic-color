@@ -1,7 +1,7 @@
 
 # cordova-plugin-dynamic-color
 
-> The `DynamicColor` object provides some functions to obtain current [dynamic color](https://m3.material.io/styles/color/dynamic-color/overview) colors/palette (Android 12+) and dark theme status (Android 9+).
+> The `DynamicColor` object provides some functions to obtain current [dynamic color](https://m3.material.io/styles/color/dynamic-color/overview) palette/colors (Android 12+) and dark theme status (Android 9+).
 
 ## Installation
 
@@ -22,7 +22,52 @@ function onDeviceReady()
 }
 ```
 
-#### DynamicColor.isDynamicColorAvailable
+Simple example of plugin usage
+
+```js
+document.addEventListener("deviceready", onDeviceReady, false);
+
+function onDeviceReady()
+{
+	DynamicColor.isDynamicColorAvailable(function(available) {
+
+		if(available) {
+
+			getDynamicColor();
+
+			document.addEventListener('dynamicColorChange', getDynamicColor);
+		}
+
+	});
+
+}
+
+function getDynamicColor() {
+
+	DynamicColor.colors(function(colors) {
+
+		DynamicColor.colorsToDom(colors.dayNight);
+
+	});
+
+	DynamicColor.palette(function(colors) {
+
+		DynamicColor.paletteToDom(colors.palette);
+
+	});
+
+}
+```
+
+```css
+.myAppStyle
+{
+	color: var(--md-sys-color-primary);
+	background: var(--md-ref-palette-neutral-variant95);
+}
+```
+
+### DynamicColor.isDynamicColorAvailable
 
 Check if the DynamicColor its available in current Android device.
 
@@ -36,7 +81,7 @@ DynamicColor.isDynamicColorAvailable(function(available) {
 });
 ```
 
-#### DynamicColor.dayNight
+### DynamicColor.dayNight
 
 Check current DayNight theme (check if dark theme is on or off).
 
@@ -52,7 +97,7 @@ DynamicColor.dayNight(function(theme) {
 });
 ```
 
-#### DynamicColor.colors
+### DynamicColor.colors
 
 Return the DynamicColor colors
 
@@ -104,16 +149,16 @@ DynamicColor.colors(function(colors) {
 });
 ```
 
-#### DynamicColor.palette
+### DynamicColor.palette
 
 Return the DynamicColor palette
 
 ```js
-DynamicColor.palette(function(palette) {
+DynamicColor.palette(function(colors) {
 
-	palette = {
+	colors = {
 		theme: 'light', // 'light' or 'dark'
-		light: {
+		palette: {
 			error0: '#000000',
 			error10: '#410E0B',
 			error20: '#601410',
@@ -192,19 +237,13 @@ DynamicColor.palette(function(palette) {
 			tertiary95: '#F9F3B8',
 			tertiary99: '#FFFBFF',
 			tertiary100: '#FFFFFF'
-		},
-		dark: {
-			...
-		}
-		dayNight: {
-			...
 		}
 	}
 
 });
 ```
 
-#### DynamicColor.colorsToCssVars
+### DynamicColor.colorsToCssVars
 
 Convert the colors object to css vars.
 
@@ -222,14 +261,14 @@ DynamicColor.colors(function(colors) {
 }
 ```
 
-#### DynamicColor.paletteToCssVars
+### DynamicColor.paletteToCssVars
 
 Convert the palette object to css vars.
 
 ```js
-DynamicColor.palette(function(palette) {
+DynamicColor.palette(function(colors) {
 
-	var cssVars = DynamicColor.paletteToCssVars(palette.light, String prefix = '--md-ref-palette');
+	var cssVars = DynamicColor.paletteToCssVars(colors.palette, String prefix = '--md-ref-palette');
 
 	/*
 	--md-ref-palette-error0: #000000;
@@ -240,26 +279,26 @@ DynamicColor.palette(function(palette) {
 }
 ```
 
-#### DynamicColor.colorsToDom
+### DynamicColor.colorsToDom
 
-Convert the colors object to css vars and insert/update in dom.
+Convert the colors object to css vars and insert/update it in the dom.
 
 ```js
 DynamicColor.colors(function(colors) {
 
-	var cssVars = DynamicColor.colorsToDom(colors.light, String prefix = '--md-sys-color');
+	DynamicColor.colorsToDom(colors.dark, String prefix = '--md-sys-color');
 
 }
 ```
 
-#### DynamicColor.paletteToDom
+### DynamicColor.paletteToDom
 
-Convert the palette object to css vars and insert/update in dom.
+Convert the palette object to css vars and insert/update it in the dom.
 
 ```js
-DynamicColor.palette(function(palette) {
+DynamicColor.palette(function(colors) {
 
-	DynamicColor.paletteToDom(palette.light, String prefix = '--md-ref-palette');
+	DynamicColor.paletteToDom(colors.palette, String prefix = '--md-ref-palette');
 
 }
 ```
@@ -271,7 +310,7 @@ DynamicColor.palette(function(palette) {
 This event is fired when any change in DayNight or DynamiColor (or both at the same time) is detected, this event only checks if there have been any changes when the app goes from the background to the foreground, if the DayNight/DynamiColor is changed while the app is in the foreground it will not be detected.
 
 ```js
-document.addEventListener('dynamicColor', function(event) {
+document.addEventListener('dynamicColorChange', function(event) {
 
 	event.changed = {
 		dayNight: true, // true if the DayNight theme have changed (dark theme turned on or off)
