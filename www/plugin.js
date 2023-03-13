@@ -1,25 +1,7 @@
-
-var exec = require('cordova/exec');
-var cordova = require('cordova');
+var exec = require('cordova/exec'),
+	cordova = require('cordova');
 
 var PLUGIN_NAME = 'DynamicColor';
-
-var DynamicColor = {
-	isDynamicColorAvailable: function(cb) {
-		exec(cb, null, PLUGIN_NAME, 'isDynamicColorAvailable', []);
-	},
-	colors: function(cb) {
-		exec(cb, null, PLUGIN_NAME, 'colors', []);
-	},
-	palette: function(cb) {
-		exec(cb, null, PLUGIN_NAME, 'palette', []);
-	},
-	colorsToCssVars: colorsToCssVars,
-	paletteToCssVars: paletteToCssVars,
-	colorsToDom: colorsToDom,
-	paletteToDom: paletteToDom,
-	dayNight: dayNight,
-};
 
 function colorsToCssVars(colors, prefix = '--md-sys-color') {
 
@@ -51,7 +33,7 @@ function _colorsToDom(colors, prefix, className) {
 	} else {
 		var head = document.head || document.getElementsByTagName('head')[0],
 			style = document.createElement('style');
-		style.class = className;
+		style.className = className;
 		style.type = 'text/css';
 		style.appendChild(document.createTextNode(cssVars));
 		head.appendChild(style);
@@ -89,6 +71,7 @@ var currentMainColors = null;
 function checkChanges() {
 
 	exec(function(dayNightIsDay) {
+
 		exec(function(mainColors) {
 
 			if(currentDayNightIsDay === null || currentMainColors === null) { // First check
@@ -105,7 +88,7 @@ function checkChanges() {
 				currentDayNightIsDay = dayNightIsDay;
 				currentMainColors = mainColors;
 
-				cordova.fireDocumentEvent('dynamicColor', {
+				cordova.fireDocumentEvent('dynamicColorChange', {
 					changed: {
 						dayNight: dayNightIsDayChanged,
 						dynamicColor: mainColorsChanged,
@@ -114,11 +97,33 @@ function checkChanges() {
 			}
 
 		}, null, PLUGIN_NAME, 'mainColors', []);
+
 	}, null, PLUGIN_NAME, 'dayNightIsDay', []);
 
 }
 
+var DynamicColor = {
+	isDynamicColorAvailable: function(cb) {
+		exec(cb, null, PLUGIN_NAME, 'isDynamicColorAvailable', []);
+	},
+	colors: function(cb) {
+		exec(cb, null, PLUGIN_NAME, 'colors', []);
+	},
+	palette: function(cb) {
+		exec(cb, null, PLUGIN_NAME, 'palette', []);
+	},
+	colorsToCssVars: colorsToCssVars,
+	paletteToCssVars: paletteToCssVars,
+	colorsToDom: colorsToDom,
+	paletteToDom: paletteToDom,
+	dayNight: dayNight,
+};
+
 document.addEventListener('resume', checkChanges);
-checkChanges();
+
+// prime it. setTimeout so that proxy gets time to init
+window.setTimeout(function() {
+    checkChanges();
+}, 0);
 
 module.exports = DynamicColor;
