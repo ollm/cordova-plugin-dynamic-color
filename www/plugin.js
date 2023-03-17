@@ -227,8 +227,8 @@ document.addEventListener('resume', checkChanges);
 
 // prime it. setTimeout so that proxy gets time to init
 window.setTimeout(function() {
-    checkChanges();
-    exec(checkChanges, null, PLUGIN_NAME, 'changeCallbackContext', []);
+	checkChanges();
+	exec(checkChanges, null, PLUGIN_NAME, 'changeCallbackContext', []);
 }, 0);
 
 module.exports = DynamicColor;

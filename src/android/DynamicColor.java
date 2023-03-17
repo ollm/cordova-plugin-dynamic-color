@@ -26,7 +26,7 @@ public class DynamicColor extends CordovaPlugin {
 	private int currentNightModeFlags = -1;
 	private CallbackContext changeCallbackContext = null;
 
-    @Override
+	@Override
 	public void initialize(CordovaInterface cordova, CordovaWebView webView) {
 		super.initialize(cordova, webView);
 		Log.d(TAG, "Initializing DynamicColor");
@@ -37,7 +37,7 @@ public class DynamicColor extends CordovaPlugin {
 		}
 	}
 
-    @Override
+	@Override
 	public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
 		switch (action) {
 			case "isDynamicColorAvailable":
@@ -75,8 +75,8 @@ public class DynamicColor extends CordovaPlugin {
 
 			if(nightModeFlags != currentNightModeFlags) {
 				currentNightModeFlags = nightModeFlags;
-		        PluginResult result = new PluginResult(PluginResult.Status.OK, true);
-		        result.setKeepCallback(true);
+				PluginResult result = new PluginResult(PluginResult.Status.OK, true);
+				result.setKeepCallback(true);
 				changeCallbackContext.sendPluginResult(result);
 			}
 		}
