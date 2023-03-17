@@ -23,12 +23,21 @@ import com.google.android.material.color.DynamicColors;
 
 public class DynamicColor extends CordovaPlugin {
 	private static final String TAG = "DynamicColor";
+	private int currentNightModeFlags = -1;
+	private CallbackContext changeCallbackContext = null;
 
+    @Override
 	public void initialize(CordovaInterface cordova, CordovaWebView webView) {
 		super.initialize(cordova, webView);
 		Log.d(TAG, "Initializing DynamicColor");
+		if(Build.VERSION.SDK_INT >= 28) {
+			Application app = this.cordova.getActivity().getApplication();
+			Resources resources = app.getResources();
+			currentNightModeFlags = resources.getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+		}
 	}
 
+    @Override
 	public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
 		switch (action) {
 			case "isDynamicColorAvailable":
@@ -47,8 +56,30 @@ public class DynamicColor extends CordovaPlugin {
 			case "mainColors":
 				getDynamicMainColor(callbackContext);
 				break;
+			case "changeCallbackContext":
+				changeCallbackContext = callbackContext;
+				break;
 		}
 		return true;
+	}
+
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+
+		super.onConfigurationChanged(newConfig);
+		if(Build.VERSION.SDK_INT >= 28) {
+
+			Application app = this.cordova.getActivity().getApplication();
+			Resources resources = app.getResources();
+			int nightModeFlags = resources.getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+
+			if(nightModeFlags != currentNightModeFlags) {
+				currentNightModeFlags = nightModeFlags;
+		        PluginResult result = new PluginResult(PluginResult.Status.OK, true);
+		        result.setKeepCallback(true);
+				changeCallbackContext.sendPluginResult(result);
+			}
+		}
 	}
 
 	private String intColorToHex(int color) {

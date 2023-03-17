@@ -410,7 +410,7 @@ DynamicColor.palette(function(colors) {
 
 ### dynamicColorChange
 
-This event is fired when any change in DayNight or DynamiColor (or both at the same time) is detected, this event only checks if there have been any changes when the app goes from the background to the foreground, if the DayNight/DynamiColor is changed while the app is in the foreground it will not be detected.
+This event is fired when any change in DayNight or DynamiColor (or both at the same time) is detected.
 
 ```js
 document.addEventListener('dynamicColorChange', function(event) {
@@ -418,6 +418,24 @@ document.addEventListener('dynamicColorChange', function(event) {
 	event.changed = {
 		dayNight: true, // true if the DayNight theme have changed (dark theme turned on or off)
 		dynamicColor: true, // true if the DynamiColor colors/palette have changed
+	}
+
+	if(event.changed.dayNight) {
+
+		DynamicColor.dayNight(function(theme) {
+
+			if(theme == 'light') {
+
+			} else { // theme == 'dark'
+
+			}
+
+		});
+
+	}
+
+	if(event.changed.dynamicColor) {
+		getDynamicColor();
 	}
 
 });
