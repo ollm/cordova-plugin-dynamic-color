@@ -26,7 +26,7 @@
 
       <source-file src="src/android/DynamicColor.java" target-dir="src/dynamic/color/cordova/" />
 
-      <framework src="com.google.android.material:material:1.8.0" />
+      <framework src="com.google.android.material:material:1.9.0" />
 
     </platform>
 </plugin>
